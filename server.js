@@ -97,12 +97,13 @@ function insertUrl(url, cb) {
 function retrieveUrl(key, cb) {
   db.collection(URLS).find({ key }, { fields: { url: 1 }})
                      .limit(1)
-                     .next((err, result) => (
+                     .next((err, result) => {
     if (err) {
       return cb(err);
     } else {
       return cb(null, result ? result.url : null);
     }
+  });
 }
 
 /**
