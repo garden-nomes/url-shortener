@@ -1,0 +1,13 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "https://github.com/noaner/url-shortener",
+  "author": "noaner <noahbweiner@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.2",
+    "mongodb": "^2.2.26",
+    "urijs": "^1.18.10"
+  }
+}
