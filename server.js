@@ -41,7 +41,7 @@ app.get('/new', (req, res) => {
       }
     });
   } else {
-    res.status(400).send({ error: 'invalid url' });
+    error(res, null, 'invalid url', 400);
   }
 });
 
@@ -51,7 +51,11 @@ app.get('/:key', (req, res) => {
     if (err) {
       error(res, err, 'unable to retreive url');
     } else {
-      res.redirect(url);
+      if (url) {
+        res.redirect(url);
+      } else {
+        error(res, null, 'invalid key', 400);
+      }
     }
   });
 });
@@ -59,7 +63,10 @@ app.get('/:key', (req, res) => {
 /* Helpers */
 
 function error(res, err, message, code = 500) {
-  console.log(JSON.stringify(err));
+  if (err) {
+    console.log(JSON.stringify(err));
+  }
+
   res.status(code).send({ error: { code, message }});
 }
 
@@ -91,8 +98,11 @@ function retrieveUrl(key, cb) {
   db.collection(URLS).find({ key }, { fields: { url: 1 }})
                      .limit(1)
                      .next((err, result) => (
-                       err ? cb(err) : cb(null, result.url)
-                     ));
+    if (err) {
+      return cb(err);
+    } else {
+      return cb(null, result ? result.url : null);
+    }
 }
 
 /**
