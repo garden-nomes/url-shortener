@@ -7,7 +7,6 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.15.2",
-    "mongodb": "^2.2.26",
-    "urijs": "^1.18.10"
+    "mongodb": "^2.2.26"
   }
 }

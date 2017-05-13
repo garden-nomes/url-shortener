@@ -1,12 +1,12 @@
 const express = require('express');
 const mongoClient = require('mongodb').MongoClient;
-const URI = require('urijs');
 
 const config = require('./config');
 
 const app = express();
 
 const URLS = 'urls';
+const URL_EXP = /[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
 /* Database/server startup */
 
@@ -28,7 +28,7 @@ mongoClient.connect(config.MONGODB_URI, (err, _db) => { if (err) {
 
 app.get('/new', (req, res) => {
   const url = req.query.url;
-  if (url && URI(url).hostname()) {
+  if (url && URL_EXP.match(url)) {
     insertUrl(url, (err, key) => {
       if (err) {
         error(res, err, 'unable to store url');
