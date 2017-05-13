@@ -28,7 +28,7 @@ mongoClient.connect(config.MONGODB_URI, (err, _db) => { if (err) {
 
 app.get('/new', (req, res) => {
   const url = req.query.url;
-  if (url && URL_EXP.match(url)) {
+  if (url && URL_EXP.test(url)) {
     insertUrl(url, (err, key) => {
       if (err) {
         error(res, err, 'unable to store url');
